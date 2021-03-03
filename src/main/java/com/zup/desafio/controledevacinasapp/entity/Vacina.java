@@ -28,7 +28,7 @@ public class Vacina{
     public Vacina() {
     }
 
-    public Vacina(String nomeVacina, LocalDate dataVacinacao, Long idUsuario, String email) {
+    public Vacina(String nomeVacina, LocalDate dataVacinacao, String email) {
         this.nomeVacina = nomeVacina;
         this.dataVacinacao = dataVacinacao;
         this.email = email;

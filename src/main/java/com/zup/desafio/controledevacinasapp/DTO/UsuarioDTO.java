@@ -1,40 +1,51 @@
-package com.zup.desafio.controledevacinasapp.entity;
+package com.zup.desafio.controledevacinasapp.DTO;
 
 
-import javax.persistence.*;
+import com.zup.desafio.controledevacinasapp.entity.Usuario;
+import org.hibernate.validator.constraints.br.CPF;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "USUARIOS")
-public class Usuario{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UsuarioDTO {
+
+
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank
+    @Size(max = 200)
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank
+    @Email
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank
+    @CPF(message = "Por favor, Digite um CPF válido.")
     private String CPF;
 
-    @Column(nullable = false)
+    @NotNull
     private LocalDate dataNascimento;
 
-    public Usuario() {
+
+    public UsuarioDTO() {
 
     }
 
-    public Usuario(String nome, String email, String CPF, LocalDate dataNascimento) {
+    public UsuarioDTO(String nome, String email, String CPF, LocalDate dataNascimento) {
         this.nome = nome;
         this.email = email;
         this.CPF = CPF;
         this.dataNascimento = dataNascimento;
+    }
+
+    public Usuario dtoParaUsuario(){
+        return new Usuario(nome, email, CPF, dataNascimento);
     }
 
     public Long getId() {
@@ -81,13 +92,13 @@ public class Usuario{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Usuario)) return false;
-        Usuario usuario = (Usuario) o;
-        return id.equals(usuario.id);
+        if (!(o instanceof UsuarioDTO)) return false;
+        UsuarioDTO that = (UsuarioDTO) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getNome(), that.getNome()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getCPF(), that.getCPF()) && Objects.equals(getDataNascimento(), that.getDataNascimento());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getId(), getNome(), getEmail(), getCPF(), getDataNascimento());
     }
 }

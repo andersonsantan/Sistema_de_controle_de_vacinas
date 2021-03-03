@@ -2,14 +2,16 @@ package com.zup.desafio.controledevacinasapp.controller;
 
 
 
+import com.zup.desafio.controledevacinasapp.DTO.MensagemRespostaDTO;
+import com.zup.desafio.controledevacinasapp.DTO.VacinaDTO;
 import com.zup.desafio.controledevacinasapp.entity.Vacina;
-import com.zup.desafio.controledevacinasapp.repository.UsuarioRepository;
-import com.zup.desafio.controledevacinasapp.repository.VacinaRepository;
+import com.zup.desafio.controledevacinasapp.service.VacinaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -17,45 +19,36 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/vacina")
 public class VacinaController {
 
-    VacinaRepository vacinaRepository;
-    UsuarioRepository usuarioRepository;
+   VacinaService vacinaService;
 
     @Autowired
-    public VacinaController(VacinaRepository vacinaRepository, UsuarioRepository usuarioRepository) {
-        this.vacinaRepository = vacinaRepository;
-        this.usuarioRepository = usuarioRepository;
+    public VacinaController(VacinaService vacinaService) {
+        this.vacinaService = vacinaService;
     }
 
+    //Inicio das chamadas de métodos CRUD da camada de serviço
+
     @PostMapping()
-    public Vacina cadastrarVacina(@RequestBody Vacina vacina){
-        return vacinaRepository.save(vacina);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Vacina cadastrarVacina(@RequestBody @Valid VacinaDTO vacinaDTO){
+        Vacina vacinaCadastrada = vacinaService.cadastrarVacina(vacinaDTO.dtoParaVacina());
+        return vacinaCadastrada;
 
     }
 
     @GetMapping
     public List<Vacina> consultarTodas(){
-        return vacinaRepository.findAll();
+        return vacinaService.consultarTodas();
     }
 
     @GetMapping(path = "/{id}")
     public Vacina consultarVacinacaoPorId(@PathVariable("id") long id){
-        return vacinaRepository.findById(id);
+        return vacinaService.consultarPorId(id);
     }
 
     @DeleteMapping(path = "/{id}")
-    public Vacina deletarCadastro(@PathVariable("id") long id){
-        return vacinaRepository.deleteById(id);
+    public MensagemRespostaDTO deletarCadastro(@PathVariable("id") long id){
+        return vacinaService.deletarCadastro(id);
     }
-    @PutMapping(path = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Vacina atualizarCadastro(@PathVariable("id") long id ,@RequestBody Vacina vacina){
-        Vacina atualizarVvacina = vacinaRepository.findById(id);
-        atualizarVvacina.setNomeVacina(vacina.getNomeVacina());
-        atualizarVvacina.setDataVacinacao(vacina.getDataVacinacao());
-        atualizarVvacina.setEmail(vacina.getEmail());
-        return vacinaRepository.save(atualizarVvacina);
-    }
-
-
 
 }
