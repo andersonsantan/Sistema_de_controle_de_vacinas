@@ -9,6 +9,5 @@ import java.util.List;
 @Repository
 public interface VacinaRepository extends JpaRepository<Vacina,Long> {
     Vacina findById(long id);
-    List<Vacina> findAll();
     Vacina deleteById(long id);
 }
