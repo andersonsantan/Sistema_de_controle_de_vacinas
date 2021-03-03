@@ -15,14 +15,14 @@ public class VacinaDTO {
 
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Digite um email")
     @Email(message = "Por favor, digite um email válido.")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Digite o nome da vacina")
     private String nomeVacina;
 
-    @NotNull
+    @NotNull(message = "A data da vacinação é um campo obrigatório")
     private LocalDate dataVacinacao;
 
 

@@ -7,6 +7,7 @@ import com.zup.desafio.controledevacinasapp.entity.Usuario;
 import com.zup.desafio.controledevacinasapp.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,10 +28,12 @@ public class UsuarioController {
     //Inicio das Cahamadas de métodos CRUD
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Usuario criarUsuario(@RequestBody @Valid UsuarioDTO usuarioDTO){
+    public ResponseEntity<Usuario> criarUsuario(@RequestBody @Valid UsuarioDTO usuarioDTO){
          Usuario usuarioSalvo =  usuarioService.salvar(usuarioDTO.dtoParaUsuario());
-         return usuarioSalvo;
+         if (usuarioDTO.equals(null)){
+             return new ResponseEntity<>(usuarioSalvo, HttpStatus.BAD_REQUEST);
+         }
+         return new ResponseEntity<>(usuarioSalvo, HttpStatus.CREATED);
     }
 
     @GetMapping

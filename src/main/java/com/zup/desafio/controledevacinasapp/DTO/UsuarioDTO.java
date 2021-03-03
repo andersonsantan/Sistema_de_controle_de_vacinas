@@ -21,11 +21,11 @@ public class UsuarioDTO {
     @Size(max = 200)
     private String nome;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Digite um email")
+    @Email(message = "Digite um email válido")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Digite um CPF")
     @CPF(message = "Por favor, Digite um CPF válido.")
     private String CPF;
 
