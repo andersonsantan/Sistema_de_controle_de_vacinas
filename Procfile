@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -Dspring.profiles.active=prod -jar target/controledevacinasapp.jar
+web: java -Dserver.port=$PORT -Dspring.profiles.active=prod -jar out/artifacts/controledevacinasapp_jar/controledevacinasapp.jar
