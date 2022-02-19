@@ -10,7 +10,7 @@ O segundo passo vai ser criar um cadastro de aplicação de vacinas, onde: nome 
 
 Vamos construir apenas dois endpoints neste sistema, o cadastro do usuário e o cadastro da aplicação da vacina. Caso os cadastros estejam corretos vamos retornar o Status 201, caso hajam erros de preenchimento de dados ou campos vazios, o Status será 400.
 
-A arquitetura a ser usada será a MCV, dado ser a arquitetura padrão do Spring MVC. 
+A arquitetura a ser usada será a REST.
 
 Vamos aplicar no desenvolvimento deste sistema alguns padrões de projeto como: 
 
